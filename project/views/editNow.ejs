@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Student</title>
+    <script src="/js/jquery.js"></script>
+    <link type="text/css" rel="stylesheet" href="/css/style.css">
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.css">
+</head>
+<body>
+
+    <center class="container bg-warning col-lg-8 col-md-10 col-sm-12" style="height: 100vh">
+
+        <% if (student) { %>
+            <form method="POST" action=/process_edits/<%= student.ID %> class="form-group pt-5 col-lg-6 col-md-8 col-sm-10">
+                <h2>EDIT STUDENT DETAILS <span><a href="/view" class="btn btn-secondary btn-md">[BACK]</a></span></h2>
+                <input name="fname" type="text" placeholder="First Name" class="form-control mt-2" required value=<%= student.fname %>>
+                <input name="lname" type="text" placeholder="Last Name" class="form-control mt-2" required value=<%= student.lname %>>
+                <input name="email" type="email" placeholder="Email" class="form-control mt-2" required value=<%= student.email %>>
+                <select name="school" id="school" class="form-control mt-2">
+                    <option value="Business">Business</option>
+                    <option value="Education">Education</option>
+                    <option value="Economics">Economics</option>
+                    <option value="IT">Information Technology</option>
+                    <option value="Natural Sciences">Natural Sciences</option>
+                    <option value="Arts">Arts</option>
+                </select>
+                <input name="dob" type="date" placeholder="Date of Birth" class="form-control mt-2" required value=<%= student.dob %>>
+                <button type="submit" class="btn-primary btn-lg col-lg-12 mt-2">SUBMIT</button>
+            </form>            
+        <% } else {%>
+            NOT FOUND!
+        <% } %>    
+    </center>
+    <script src="/js/script.js"></script>
+</body>
+</html>

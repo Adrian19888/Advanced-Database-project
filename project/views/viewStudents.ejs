@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View</title>
+    <script src="/js/jquery.js"></script>
+    <link type="text/css" rel="stylesheet" href="/css/style.css">
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.css">
+</head>
+<body>
+    <center class="container bg-warning col-lg-8 col-md-10 col-sm-12" style="height: 100vh">
+        <form method="POST" action="create" class="form-group pt-5 col-lg-6 col-md-8 col-sm-10">
+            <% if (errors) { %>
+                <p id="notification" class="alert-danger rounded" role="alert">ERROR! Email probably already register</p>
+            <% } %>
+            
+            <h2>ENTER STUDENT DETAILS</h2>
+            <input name="fname" type="text" placeholder="First Name" class="form-control mt-2" required>
+            <input name="lname" type="text" placeholder="Last Name" class="form-control mt-2" required>
+            <input name="email" type="email" placeholder="Email" class="form-control mt-2" required>
+            <select name="school" id="school" class="form-control mt-2">
+                <option value="Business">Business</option>
+                <option value="Education">Education</option>
+                <option value="Economics">Economics</option>
+                <option value="IT">Information Technology</option>
+                <option value="Natural Sciences">Natural Sciences</option>
+                <option value="Arts">Arts</option>
+            </select>
+            <input name="dob" type="date" placeholder="Date of Birth" class="form-control mt-2" required>
+            <button type="submit" class="btn-primary btn-lg col-lg-12 mt-2">SUBMIT</button>
+        </form>
+        <div class="mt-2">
+            <div class="form-check form-switch col-lg-2 col-md-8 col-sm-8">
+                <input id="seeStudents" name="seeStudents" type="checkbox" class="form-check-input" checked onchange="checkedChange('seeStudents')">
+                <label class="form-check-label" for="seeStudents">View Students</label>
+            </div>
+            <hr class="col-lg-6 col-md-8 col-sm-10 mt-2">
+            <div id="studentList" class="my-2 col-lg-10 col-md-10 col-sm-12 mt-2">
+                <table class="table">
+                    <% if (data.length>0) { %> 
+                        <% for(var i=0; i < data.length; i++) { %>
+                            <tr>
+                                <td><%= data[i].ID %></td>
+                                <td><%= data[i].fname %></td>
+                                <td><%= data[i].lname %></td>
+                                <td><%= data[i].DOB %></td>
+                                <td><%= data[i].school %></td>
+                                <td><%= data[i].email %></td>
+                                <td><form method="POST" action=edit/<%= data[i].ID %> ><button type="submit">✍️</button></form></td>
+                                <td><form method="POST" action=delete/<%= data[i].ID %> ><button type="submit">❌</button></form></td>
+                            </tr>
+                        <% } %>
+                    <% } else {%>
+                        <h3>NO DATA FOUND</h3>
+                    <% } %> 
+                </table>
+            </div>
+        </div>
+    </center>
+    <script src="/js/script.js"></script>
+    <script>
+        $("#notification").css("display", "none")
+        const editNow = (id) => {
+            $.ajax({
+                type: "get",
+                url: "/edit",
+                data: {"id": id}
+            });
+        }
+
+        const checkedChange = (id) => {
+            if ($("#studentList").css("display")=="none") {
+                $("#studentList").show("slow");
+            }
+            else{
+                $("#studentList").hide('slow')
+            }
+        }
+    </script>
+</body>
+</html>
